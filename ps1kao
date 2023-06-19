@@ -1,0 +1,69 @@
+#!/bin/bash
+RED='\033[0;31m'
+GRN='\033[1;32m'
+WHT='\033[0m'
+
+resolveErr() {
+
+case $1 in
+    	0)
+      		exit 0    
+    	;;
+    	1)
+      	echo  "General Error (1)"
+      	exit 0
+    	;;
+    	2)
+      		echo "Misuse of shell builtins"
+      	exit 0
+    	;;
+    	6)
+      		echo "No such device or address"
+      		exit 0
+    	;;
+    	124)
+      		echo "Command timed out"
+      		exit 0
+    	;;
+    	125)
+      		echo "Command Failed"
+      		exit 0
+    	;;
+    	126)
+      		echo "Command found but unable to exec"
+      		exit 0
+    	;;
+    	127)
+      		echo "Command cant be found"
+      		exit 0
+    	;;
+    	128)
+      		echo "Invalid argument for exit"
+      		exit 0
+    	;;
+    	130)
+      		echo "Ctrl-C pressed"
+      		exit 0
+    	;;
+    	141)
+      		echo "Write on pipe w/o reader"
+      		exit 0
+    	;;
+esac
+if [[ $1 > 128 ]]
+then
+    echo $(errno $1)
+    exit 0
+else
+    echo $1
+    exit 0
+fi
+
+
+}
+if [ $1 -eq 0 ]
+then 
+	echo -e "${GRN}^_^${WHT}"; 
+else
+	echo -e "${RED}O_O${WHT}] [${RED}$(resolveErr($1))${WHT}";
+fi
